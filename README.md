@@ -5,6 +5,7 @@
 O **Flashcard AI** consiste em um sistema de criação de flashcards inteligentes de uso manual ou com Inteligência Artifical para ajudar a vida dos estudantes. Escolha uma plataforma de estudos que você confie, insira o link no promp da IA, espere alguns segundos e você terá cards gerados automáticamente por para facilitar seus estudos.
 
 ## Wireframe do sistema
+
 ![Wireframe da tela de login](docs/wireframes/flashcard-ai-wireframe.png)
 
 ## Estrutura das pastas
@@ -75,32 +76,31 @@ flascard-ai
 ```
 
 ## Endpoints
-`POST /register/`
 
-`POST /login/`
+### Categorias
 
-`GET /users/<usuario>/` -> listar todas as categorias
+`GET /categories/`
 
-`POST /users/<usuario>/category/create/`
+`POST /categories/`
 
-`GET /users/<usuario>/<category>/` -> listar as subcategorias e/ou decks de uma categoria
+`GET /categories/{id}/`
 
-`POST /users/<usuario>/<category>/subcategory/create/`
+### Subcategorias
 
-`POST /users/<usuario>/<category>/deck/create` -> Criar um deck **PERTENCENDO a uma categoria**, mas a **NENHUMA subcategoria**
+`GET /categories/{id}/subcategories/`
 
-`GET /users/<usuario>/<category>/<subcategory>/` -> listar todos os decks de uma categoria
+`POST /categories/{id}/subcategories/`
 
-`POST /users/<usuario>/<category>/<subcategory>/deck/create/` -> Criando um deck que **PERTENCE a uma categoria e a uma subcategoria**
+`GET /subcategories/{id}`
 
-`POST /users/<usuario>/<category>/<deck>/create-card/` -> Criando um card que **PERTENCE APENAS a uma categoria**
+### Decks
 
-`POST /users/<usuario>/<category>/<subcategory>/<deck>/create-card/` -> Criando um card que pertence **PERTENCE a uma categoria e subcategoria
+`GET /decks/{id}/`
 
-`POST /users/<usuario>/<category>/<deck>/create-card-with-ai/` -> Criando um **card com IA** que **PERTENCE APENAS a uma categoria**
+`POST /decks/`
 
-`POST /users/<usuario>/<category>/<subcategory>/<deck>/create-card-with-ai/` -> Criando um **card com IA** que pertence **PERTENCE a uma categoria e subcategoria**
+### Cards
 
-`GET /users/<usuario>/<category>/<deck>/` -> Visualizar os **card de um deck** que **PERTENCEM APENAS a uma categoria**
+`GET /decks/{id}/cards/`
 
-`GET /users/<usuario>/<category>/<subcategoria>/<deck>/` -> Visualizar os **card de um deck** que **PERTENCEM a uma categoria e subcategoria**
+`POST /decks/{id}/cards/`
