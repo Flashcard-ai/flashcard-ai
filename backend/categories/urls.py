@@ -4,5 +4,5 @@ from categories.views import CategoryAPIView
 app_name = "categories"
 
 urlpatterns = [
-    path("", CategoryAPIView.as_view(), name="category")
+    path("", CategoryAPIView.as_view(), name="category_view")
 ]

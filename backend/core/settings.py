@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'users',
     'signup',
     'categories',
+    'subcategories',
 ]
 
 MIDDLEWARE = [
