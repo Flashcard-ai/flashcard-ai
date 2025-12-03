@@ -95,12 +95,10 @@ flascard-ai
 
 ### Decks
 
-`GET /decks/{id}/`
-
 `POST /decks/`
 
 ### Cards
 
-`GET /decks/{id}/cards/`
+`GET /decks/{id}/` -> Visualizar cards
 
 `POST /decks/{id}/cards/`
