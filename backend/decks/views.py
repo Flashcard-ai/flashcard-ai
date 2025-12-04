@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from decks.models import Deck
 from decks.serializers import DeckSerializer
+from cards.models import Card
+from cards.serializers import CardSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
@@ -20,5 +22,9 @@ class DeckAPIView(APIView):
 class DeckDetailView(APIView):
     def get(self, request, id):
         deck = get_object_or_404(Deck, id=id)
-        serializer = DeckSerializer(deck)
-        return Response(serializer.data)
+        cards = Card.objects.filter(deck_id=deck)
+        card_serializer = CardSerializer(cards, many=True)
+        return Response({
+            "cards": card_serializer.data
+        })
+        
