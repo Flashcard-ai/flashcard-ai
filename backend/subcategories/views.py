@@ -1,6 +1,8 @@
 from rest_framework.views import APIView
 from subcategories.models import Subcategory
 from subcategories.serializers import SubcategorySerializer
+from decks.models import Deck
+from decks.serializers import DeckSerializer
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -21,6 +23,11 @@ class SubcategoryAPIView(APIView):
 class SubcategoryDetailView(APIView):
     def get(self, request, id):
         subcategory = get_object_or_404(Subcategory, id=id)
-        serializer = SubcategorySerializer(subcategory)
-        return Response(serializer.data)
+        decks = Deck.objects.filter(subcategory_id=subcategory)
+        deck_serializer = DeckSerializer(decks, many=True)
+
+        return Response({
+            "decks": deck_serializer.data
+        })
+        
 
