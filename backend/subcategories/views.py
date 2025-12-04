@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from subcategories.models import Subcategory
 from subcategories.serializers import SubcategorySerializer
 from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 
 class SubcategoryAPIView(APIView):
@@ -15,3 +16,10 @@ class SubcategoryAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class SubcategoryDetailView(APIView):
+    def get(self, request, id):
+        subcategory = get_object_or_404(Subcategory, id=id)
+        serializer = SubcategorySerializer(subcategory)
+        return Response(serializer.data)
+
