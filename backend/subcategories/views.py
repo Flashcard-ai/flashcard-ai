@@ -7,7 +7,7 @@ from rest_framework import status
 
 class SubcategoryAPIView(APIView):
     def get(self, request):
-        subcategories = Subcategory.objects.all()
+        subcategories = Subcategory.objects.filter(category_id__owner=request.user)
         serializer = SubcategorySerializer(subcategories, many=True)
         return Response(serializer.data)
 
@@ -16,6 +16,7 @@ class SubcategoryAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class SubcategoryDetailView(APIView):
     def get(self, request, id):

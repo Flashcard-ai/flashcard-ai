@@ -7,7 +7,7 @@ from rest_framework import status
 
 class CategoryAPIView(APIView):
     def get(self, request):
-        categories = Category.objects.all()
+        categories = Category.objects.filter(owner=request.user)
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 
@@ -16,6 +16,7 @@ class CategoryAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class CategoryDetailView(APIView):
     def get(self, request, id):
