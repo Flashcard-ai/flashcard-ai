@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'signup',
     'categories',
     'subcategories',
+    'decks',
 ]
 
 MIDDLEWARE = [
