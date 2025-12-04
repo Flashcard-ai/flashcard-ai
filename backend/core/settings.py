@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'categories',
     'subcategories',
     'decks',
+    'cards',
 ]
 
 MIDDLEWARE = [
