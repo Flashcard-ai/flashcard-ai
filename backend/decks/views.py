@@ -19,6 +19,7 @@ class DeckAPIView(APIView):
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     
+
 class DeckDetailView(APIView):
     def get(self, request, id):
         deck = get_object_or_404(Deck, id=id)

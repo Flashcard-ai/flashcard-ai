@@ -2,12 +2,20 @@ FROM python:3.12-slim-bookworm
 
 WORKDIR /core
 
-COPY requirements.txt ./
+RUN apt-get update && \
+    apt-get install -y curl
 
-RUN pip install --no-cache-dir -r requirements.txt
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Essa linha está no site oficial do uv para usar num Dockerfile
+ENV PATH="/root/.local/bin/:$PATH"
+
+COPY pyproject.toml uv.lock ./ 
+
+RUN uv sync
 
 COPY . .
 
 EXPOSE 8000
 
-CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000" ]
+CMD [ "uv", "run", "python3", "manage.py", "runserver", "0.0.0.0:8000" ]
