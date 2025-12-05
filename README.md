@@ -87,18 +87,26 @@ flascard-ai
 
 ### Subcategorias
 
-`GET /categories/{id}/subcategories/`
+`GET /subcategories/`
 
-`POST /categories/{id}/subcategories/`
+`POST /subcategories/`
 
-`GET /subcategories/{id}`
+`GET /subcategories/{id}/`
 
 ### Decks
 
+`GET /decks/`
+
 `POST /decks/`
+
+`GET /decks/{id}/`
 
 ### Cards
 
-`GET /decks/{id}/` -> Visualizar cards
+`GET /cards/`
 
-`POST /decks/{id}/cards/`
+`POST /cards/`
+
+`GET /cards/{id}/`
+
+> Para ver todos os endpoints com campos obrigatórios e opcionais, consulte o [API.md](API.md)
