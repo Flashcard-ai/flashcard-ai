@@ -10,9 +10,3 @@
   --font-inter: 'Inter', sans-serif;
   --font-exo2: 'Exo 2', sans-serif;
 }
-
-@layer utilities {
-  .border-gradient-blue {
-    border-image: var(--background-image-gradient-blue) 1;
-  }
-}
