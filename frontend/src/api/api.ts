@@ -4,14 +4,16 @@ import {
   setAccessTokenMemory,
 } from "../utils/auth-memory";
 
+const backURL = "http://localhost:8000/";
+
 const api = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: backURL,
   withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
   const token = getAccessTokenMemory();
-  if (token) {
+  if (token && token !== "") {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
@@ -27,32 +29,42 @@ api.interceptors.response.use(
     const originalRequest = error.config;
 
     if (!originalRequest) {
+      console.log("[DEBUG] Sem originalRequest, rejeitando erro:", error);
       return Promise.reject(error);
     }
 
     if (error.response?.status !== 401) {
+      console.log("[DEBUG] Erro não 401, status:", error.response?.status);
       return Promise.reject(error);
     }
 
     if ((originalRequest as any)._retry) {
+      console.log("[DEBUG] Já tentou refresh antes, rejeitando...");
       return Promise.reject(error);
     }
 
     (originalRequest as any)._retry = true;
 
     try {
-      const refresh = await api.post("api/token/refresh/");
-      const newToken = refresh.data.access;
+      console.log("[DEBUG] Tentando refresh token...");
 
+      const refresh = await axios.post(backURL + 'api/token/refresh/', {}, { withCredentials: true })
+      console.log("[DEBUG] Resposta do refresh:", refresh.data);
+
+      const newToken = refresh.data.access;
       setAccessTokenMemory(newToken);
+
+      console.log("[DEBUG] Novo token salvo na memória:", newToken);
 
       (originalRequest.headers as AxiosHeaders).set(
         "Authorization",
         `Bearer ${newToken}`
       );
 
+      console.log("[DEBUG] Reenviando requisição original com novo token...");
       return api(originalRequest);
     } catch (err) {
+      console.error("[DEBUG] Falha ao tentar refresh:", err);
       return Promise.reject(err);
     }
   }

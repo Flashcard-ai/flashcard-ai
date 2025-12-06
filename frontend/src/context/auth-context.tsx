@@ -1,4 +1,5 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
+import { setAccessTokenMemory } from "../utils/auth-memory";
 
 type AuthContextType = {
   token: string | null;
@@ -32,11 +33,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.removeItem("u_token");
   };
 
+  useEffect(() => {
+    setAccessTokenMemory(token);
+  }, [token]);
+
   return (
     <AuthContext.Provider
       value={{ token, isAuthenticated: !!token, isLoading, login, logout }}
     >
-      
       {children}
     </AuthContext.Provider>
   );
