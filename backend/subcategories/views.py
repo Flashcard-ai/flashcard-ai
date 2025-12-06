@@ -3,6 +3,7 @@ from subcategories.models import Subcategory
 from subcategories.serializers import SubcategorySerializer
 from decks.models import Deck
 from decks.serializers import DeckSerializer
+from categories.models import Category
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 from rest_framework import status
@@ -14,15 +15,25 @@ class SubcategoryAPIView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        category_id = request.data.get("category_id")
+        category = get_object_or_404(Category, id=category_id)
+
+        if category.owner != request.user:
+            return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
         serializer = SubcategorySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(category_id=category)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class SubcategoryDetailView(APIView):
     def get(self, request, id):
         subcategory = get_object_or_404(Subcategory, id=id)
+
+        if subcategory.category_id.owner != request.user:
+            return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
         decks = Deck.objects.filter(subcategory_id=subcategory)
         deck_serializer = DeckSerializer(decks, many=True)
 
@@ -30,4 +41,12 @@ class SubcategoryDetailView(APIView):
             "decks": deck_serializer.data
         })
         
+    def delete(self,request, id):
+        subcategory = get_object_or_404(Subcategory, id=id)
+
+        if subcategory.category_id.owner != request.user:
+            return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
+        subcategory.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 

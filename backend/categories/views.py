@@ -18,13 +18,17 @@ class CategoryAPIView(APIView):
     def post(self, request):
         serializer = CategorySerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        serializer.save(owner=request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CategoryDetailView(APIView):
     def get(self, request, id):
         category = get_object_or_404(Category, id=id)
+
+        if category.owner != request.user:
+            return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
         subcategories = Subcategory.objects.filter(category_id=category)
         decks = Deck.objects.filter(category_id=category)
         
@@ -35,3 +39,12 @@ class CategoryDetailView(APIView):
             "subcategories": subcategory_serializer.data,
             "decks": deck_serializer.data
         })
+
+    def delete(self, request, id):
+        category = get_object_or_404(Category, id=id)
+
+        if category.owner != request.user:
+            return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
+
+        category.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

@@ -4,4 +4,8 @@ from categories.models import Category
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = [ "owner", "name" ]
+        fields = [ "id", "owner", "name" ]
+        extra_kwargs = {
+            "id": { "read_only": True },
+            "owner": { "read_only": True }
+        }
