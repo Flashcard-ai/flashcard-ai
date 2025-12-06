@@ -31,7 +31,7 @@ class LoginAPIView(APIView):
             key="refresh",
             value=str(refresh),
             httponly=True,
-            secure=True,
+            secure=False,
             samesite="Lax",
             path="/api/token/refresh/"
         )
@@ -59,7 +59,7 @@ class RefreshTokenAPIView(APIView):
                 key="refresh",
                 value=str(refresh),
                 httponly=True,
-                secure=True,
+                secure=False,
                 samesite="Lax",
                 path="/api/token/refresh/"
             )
