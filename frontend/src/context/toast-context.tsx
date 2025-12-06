@@ -27,7 +27,7 @@ export const ToastProvider = ({ children }: { children: JSX.Element }) => {
 
   const addToast = useCallback(
     (message: string, type: ToastTypes) => {
-      const id = Date.now();
+      const id = Date.now() + Math.random();
 
       const newToast = { id, type, message };
       setToasts((state) => [...state, newToast]);

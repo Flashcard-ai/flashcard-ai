@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -51,6 +51,10 @@ export const RegisterAndLoginPage = () => {
   const { mutate: mutateLogin } = useLogin(addToast);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    authContext?.login("")
+  }, [])
 
   function onSubmit(body: FormType) {
     const { confirmPassword, ...apiData } = body;
