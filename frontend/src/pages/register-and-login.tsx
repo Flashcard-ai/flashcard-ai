@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useLogin, useRegister } from "../hooks/useAuth";
 import { AuthContext } from "../context/auth-context";
 import { useNavigate } from "react-router";
+import { useToast } from "../hooks/useToast";
 
 const LoginSchema = z.object({
   email: z.string().email("O email está inválido."),
@@ -45,8 +46,9 @@ export const RegisterAndLoginPage = () => {
     resolver: zodResolver(currentSchema as any),
   });
 
-  const { mutate: mutateRegister } = useRegister();
-  const { mutate: mutateLogin } = useLogin();
+  const { addToast } = useToast();
+  const { mutate: mutateRegister } = useRegister(addToast);
+  const { mutate: mutateLogin } = useLogin(addToast);
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -56,21 +58,14 @@ export const RegisterAndLoginPage = () => {
     if (isRegistering) {
       mutateRegister(apiData as any, {
         onSuccess: () => {
-          alert("Conta criada");
           toggleMode();
-        },
-        onError: (error) => {
-          alert("Erro: " + error);
-        },
+        }
       });
     } else {
       mutateLogin(apiData as any, {
         onSuccess: (response) => {
           authContext?.login(response.data?.access)
           navigate('/categories', {replace: true})
-        },
-        onError: (error) => {
-          alert("Erro: " + error);
         },
       });
     }
