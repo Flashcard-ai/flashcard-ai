@@ -41,8 +41,8 @@ api.interceptors.response.use(
     (originalRequest as any)._retry = true;
 
     try {
-      const refresh = await api.post("/auth/refresh");
-      const newToken = refresh.data.access_token;
+      const refresh = await api.post("api/token/refresh/");
+      const newToken = refresh.data.access;
 
       setAccessTokenMemory(newToken);
 
