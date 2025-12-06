@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useLogin, useRegister } from "../hooks/useAuth";
-import { AuthContext } from "../context/auth-context";
+import { useLogin, useRegister } from "../../hooks/useAuth";
+import { AuthContext } from "../../context/auth-context";
 import { useNavigate } from "react-router";
-import { useToast } from "../hooks/useToast";
+import { useToast } from "../../hooks/useToast";
 
 const LoginSchema = z.object({
   email: z.string().email("O email está inválido."),

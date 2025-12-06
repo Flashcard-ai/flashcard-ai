@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
-import { CategoriesPage } from "../pages/categories";
-import { RegisterAndLoginPage } from "../pages/register-and-login";
+import { CategoriesPage } from "../pages/categories/categories";
+import { RegisterAndLoginPage } from "../pages/register-and-login/register-and-login";
 import { PrivateRouter } from "./private-router";
 
 
