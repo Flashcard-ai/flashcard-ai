@@ -10,7 +10,7 @@ from rest_framework import status
 
 class SubcategoryAPIView(APIView):
     def get(self, request):
-        subcategories = Subcategory.objects.filter(category_id__owner=request.user)
+        subcategories = Subcategory.objects.filter(category_id__owner=request.user).order_by("id")
         serializer = SubcategorySerializer(subcategories, many=True)
         return Response(serializer.data)
 
