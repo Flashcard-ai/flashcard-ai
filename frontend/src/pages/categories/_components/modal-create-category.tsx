@@ -6,8 +6,6 @@ import {
   type CategoryType,
 } from "../../../hooks/useCategory";
 import { useToast } from "../../../hooks/useToast";
-import { useContext } from "react";
-import { AuthContext } from "../../../context/auth-context";
 import { useQueryClient } from "@tanstack/react-query";
 
 interface ModalCreateCategoryProps {
@@ -47,13 +45,13 @@ export const ModalCreateCategoryComponent = ({
   });
 
   const { addToast } = useToast();
-  const authContext = useContext(AuthContext);
   const { mutate: mutateCreateCategory } = useCreateCategory(
     addToast,
   );
   const queryClient = useQueryClient();
 
   const createCategory = (data: ModalType) => {
+    reset()
     mutateCreateCategory(data, {
       onSuccess: () => {
         setShowModal(!showModal);
