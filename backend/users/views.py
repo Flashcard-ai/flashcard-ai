@@ -34,7 +34,7 @@ class LoginAPIView(APIView):
             httponly=True,
             secure=False,
             max_age=1296000, # 15 dias
-            samesite="None",
+            samesite="Lax",
             path="/"
         )
 
@@ -46,6 +46,7 @@ class RefreshTokenAPIView(APIView):
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh")
+        print(f"Refresh: {refresh_token}")
 
         if not refresh_token:
             return Response({"detail": "Refresh token not provided"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -65,7 +66,7 @@ class RefreshTokenAPIView(APIView):
                 httponly=True,
                 secure=False,
                 max_age=1296000, # 15 dias
-                samesite="None",
+                samesite="Lax",
                 path="/"
             )
 
