@@ -10,7 +10,7 @@ from django.shortcuts import get_object_or_404
 
 class DeckAPIView(APIView):
     def get(self, request):
-        decks = Deck.objects.filter(category_id__owner=request.user)
+        decks = Deck.objects.filter(category_id__owner=request.user).order_by("id")
         serializer = DeckSerializer(decks, many=True)
         return Response(serializer.data)
     
@@ -32,7 +32,7 @@ class DeckDetailView(APIView):
     def get(self, request, id):
         deck = get_object_or_404(Deck, id=id)
 
-        if deck.category_id.owner != request.user():
+        if deck.category_id.owner != request.user:
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
 
         cards = Card.objects.filter(deck_id=deck)

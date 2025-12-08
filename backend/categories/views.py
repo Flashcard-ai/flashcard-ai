@@ -11,7 +11,7 @@ from rest_framework import status
 
 class CategoryAPIView(APIView):
     def get(self, request):
-        categories = Category.objects.filter(owner=request.user)
+        categories = Category.objects.filter(owner=request.user).order_by("id")
         serializer = CategorySerializer(categories, many=True)
         return Response(serializer.data)
 

@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework import status
+from datetime import timedelta
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
@@ -32,8 +33,9 @@ class LoginAPIView(APIView):
             value=str(refresh),
             httponly=True,
             secure=False,
-            samesite="Lax",
-            path="/api/token/refresh/"
+            max_age=1296000, # 15 dias
+            samesite="None",
+            path="/"
         )
 
         return response
@@ -53,15 +55,18 @@ class RefreshTokenAPIView(APIView):
             refresh = RefreshToken(refresh_token)
             new_access = str(refresh.access_token)
 
+            new_refresh = str(refresh)
+
             response = Response({"access": new_access})
 
             response.set_cookie(
                 key="refresh",
-                value=str(refresh),
+                value=new_refresh,
                 httponly=True,
                 secure=False,
-                samesite="Lax",
-                path="/api/token/refresh/"
+                max_age=1296000, # 15 dias
+                samesite="None",
+                path="/"
             )
 
             return response
