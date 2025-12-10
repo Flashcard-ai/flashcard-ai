@@ -1,12 +1,63 @@
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import 'tailwindcss';
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "tailwindcss";
 
 @theme {
-  --background-image-gradient-blue: linear-gradient(135deg, #00CCCC 0%, #00AAFF 100%);
-  --background-image-gradient-whcyan: linear-gradient(215.53deg, #C2C2C2 21.13%, #35D3FF 124.14%);
-  --background-image-gradient-gblack: radial-gradient(50% 50% at 50% 50%, rgba(0, 255, 255, 0.1) 0%, rgba(0, 159, 159, 0.04) 95.26%, rgba(0, 0, 0, 0.02) 100%), linear-gradient(135deg, #000000 0%, #000000 96.61%, #000000 100%);
-  --color-cyan-secondary: #35D3FF;
-  --color-pink-secondary: #FF6BDA;
-  --font-inter: 'Inter', sans-serif;
-  --font-exo2: 'Exo 2', sans-serif;
+  --background-image-gradient-blue: linear-gradient(
+    135deg,
+    #00cccc 0%,
+    #00aaff 100%
+  );
+  --background-image-gradient-whcyan: linear-gradient(
+    215.53deg,
+    #c2c2c2 21.13%,
+    #35d3ff 124.14%
+  );
+  --background-image-gradient-gblack: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(0, 255, 255, 0.1) 0%,
+      rgba(0, 159, 159, 0.04) 95.26%,
+      rgba(0, 0, 0, 0.02) 100%
+    ),
+    linear-gradient(135deg, #000000 0%, #000000 96.61%, #000000 100%);
+  --color-cyan-secondary: #35d3ff;
+  --color-pink-secondary: #ff6bda;
+  --font-inter: "Inter", sans-serif;
+  --font-exo2: "Exo 2", sans-serif;
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #232049;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #22d3ee;
+  border-radius: 9999px;
+  border: 1px solid #232049;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #06b6d4;
+  cursor: pointer;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #22d3ee #232049;
 }
