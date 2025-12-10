@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 from pydantic_ai import Agent
+from groq import RateLimitError, APIError
 from dotenv import load_dotenv
 import requests
 import json
@@ -54,11 +55,15 @@ FLASHCARD_AGENT = Agent(
 
 
 def flashcard_ai(prompt: str, url: str) -> dict:
-    final_prompt = prompt + url
-    result_str = FLASHCARD_AGENT.run_sync(final_prompt)
-    result = json.loads(str(result_str.output))
-
-    #if result["status_code"] == 413:
-        #return "Token limit ranched"
+    try:
+        final_prompt = prompt + url
+        result_str = FLASHCARD_AGENT.run_sync(final_prompt)
+        result = json.loads(str(result_str.output))
+    except RateLimitError:
+        # Ultrapassou a quantidade de tokens por MINUTO
+        return {"error": "Token limit per minute exceeded"}
+    except APIError:
+        # Ultrapassou a quantidade TOTAL de tokens
+        return {"error": "Token limit exhausted"}
 
     return result

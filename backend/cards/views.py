@@ -2,7 +2,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.response import Response
 from cards.models import Card
-from cards.serializers import CardSerializer, FlashcardAISerializer, FlashcardAIFieldsSerializer
+from cards.serializers import CardSerializer, FlashcardAISerializer, FlashcardAIFieldsSerializer, FlashcardAIFieldsURLAndPromptSerializer
 from cards.services import scraping, flashcard_ai
 from categories.models import Category
 from subcategories.models import Subcategory
@@ -17,7 +17,13 @@ class CardAPIView(APIView):
 
     def post(self, request):
         # Verificar se categoria é válida
+
         category_id = request.data.get("category_id")
+        if not category_id:
+            serializer = CardSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         category = get_object_or_404(Category, id=category_id)
 
         if category.owner != request.user:
@@ -26,17 +32,25 @@ class CardAPIView(APIView):
 
         # verificar se há subcategoria e se ele é válido
         subcategory_id = request.data.get("subcategory_id")
-        
+        subcategory = None
+
         if subcategory_id:
             subcategory = get_object_or_404(Subcategory, id=subcategory_id)
             if subcategory.category_id.owner != request.user:
                 return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
         else:
-            subcategory = None
+            serializer = CardSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        
+
         # Verificar se deck é válido
         deck_id = request.data.get("deck_id")
+        if not deck_id:
+            serializer = CardSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         deck = get_object_or_404(Deck, id=deck_id)
 
         if deck.category_id.owner != request.user:
@@ -53,6 +67,11 @@ class FlashCardAIAPIView(APIView):
     def post(self, request):
         # Verificar se categoria é válida
         category_id = request.data.get("category_id")
+        if not category_id:
+            serializer = FlashcardAIFieldsURLAndPromptSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
         category = get_object_or_404(Category, id=category_id)
 
         if category.owner != request.user:
@@ -61,17 +80,25 @@ class FlashCardAIAPIView(APIView):
 
         # Verificar se há subcategoria e se é válido
         subcategory_id = request.data.get("subcategory_id")
+        subcategory = None
 
         if subcategory_id:
             subcategory = get_object_or_404(Subcategory, id=subcategory_id)
             if subcategory.category_id.owner != request.user:
                 return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
         else:
-            subcategory = None
+            serializer = FlashcardAIFieldsURLAndPromptSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
         
         # Verificar se deck é válido
         deck_id = request.data.get("deck_id")
+        if not deck_id:
+            serializer = FlashcardAIFieldsURLAndPromptSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
         deck = get_object_or_404(Deck, id=deck_id)
 
         if deck.category_id.owner != request.user:
@@ -86,6 +113,9 @@ class FlashCardAIAPIView(APIView):
 
         extract_url = scraping(url_request)
         flashcard = flashcard_ai(prompt_request, extract_url)
+
+        if "error" in flashcard:
+            return Response({"error": flashcard}, status=status.HTTP_413_REQUEST_ENTITY_TOO_LARGE)
 
         created_cards = []
 

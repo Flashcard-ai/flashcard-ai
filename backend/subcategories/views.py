@@ -16,6 +16,11 @@ class SubcategoryAPIView(APIView):
 
     def post(self, request):
         category_id = request.data.get("category_id")
+        if not category_id:
+            serializer = SubcategorySerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
         category = get_object_or_404(Category, id=category_id)
 
         if category.owner != request.user:
@@ -26,6 +31,7 @@ class SubcategoryAPIView(APIView):
         serializer.save(category_id=category)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+        
 
 class SubcategoryDetailView(APIView):
     def get(self, request, id):
