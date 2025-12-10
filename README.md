@@ -2,76 +2,36 @@
 
 ## Visão geral
 
-O **Flashcard AI** consiste em um sistema de criação de flashcards inteligentes de uso manual ou com Inteligência Artifical para ajudar a vida dos estudantes. Escolha uma plataforma de estudos que você confie, insira o link no promp da IA, espere alguns segundos e você terá cards gerados automáticamente por para facilitar seus estudos.
+O **Flashcard AI** consiste em um sistema de criação de flashcards inteligentes de uso manual ou com Inteligência Artifical para ajudar a vida dos estudantes. Escolha uma plataforma de estudos que você confie, insira o link no prompt da IA, espere alguns segundos e você terá cards gerados automaticamente para facilitar seus estudos.
 
 ## Wireframe do sistema
 
 ![Wireframe da tela de login](docs/wireframes/flashcard-ai-wireframe.png)
 
-## Estrutura das pastas
+## Estrutura das pastas (resumo)
 
 ### Backend
-
 ```
-flascard-ai
-|
-├── backend/
-|   ├── core/
-|   |   ├── asgi.py
-|   |   └── settings.py
-|   |   └── urls.py
-|   |   └── wsgi.py
-|   |   
-|   ├── users/
-|   |     └── models.py
-|   | 
-|   ├── register/
-|   |       ├── views.py
-|   |         ├── urls.py
-|   |         ├── models.py
-|   |         ├── admin.py
-|   |         ├── apps.py
-|   |         └── tests.py
-|   |
-|   ├── login/
-|   |       ├── views.py
-|   |         ├── urls.py
-|   |         ├── models.py
-|   |         ├── admin.py
-|   |         ├── apps.py
-|   |         └── tests.py
-|   |
-|   ├── cards/
-|   |   ├── views/
-|   |           ├── category.py
-|   |           ├── subcategory.py
-|   |           ├── deck.py
-|   |           └── card.py
-|   |        
-|   |    ├── serializers/
-|   |           ├── category.py
-|   |           ├── subcategory.py
-|   |           ├── deck.py
-|   |           └── card.py
-|   |         
-|   |    ├── urls/
-|   |           ├── category.py
-|   |           ├── subcategory.py
-|   |           ├── deck.py
-|   |           └── card.py
-|   |
-|   |     ├── models/
-|   |           ├── category.py
-|   |           ├── subcategory.py
-|   |           ├── deck.py
-|   |           └── card.py
-|   | 
-|   ├── requirements.txt
-|   └── manage.py
-|        
-|   docker-compose.yml
-|   .gitignore
-└── README.md
+flascard-ai/
+    backend/
+        cards/
+        categories/
+        core/
+        decks/
+        signup/
+        subcategories/
+        users/
+    
+        .env
+        .env.example
+        Dockerfile
+        manage.py
+        pyproject.toml
+        uv.lock
+        
+    .gitignore
+    API.md
+    README.md
     
 ```
 
@@ -108,5 +68,7 @@ flascard-ai
 `POST /cards/`
 
 `GET /cards/{id}/`
+
+`POST /cards/ai/`
 
 > Para ver todos os endpoints com campos obrigatórios e opcionais, consulte o [API.md](API.md)

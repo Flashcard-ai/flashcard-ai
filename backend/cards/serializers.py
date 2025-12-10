@@ -17,7 +17,7 @@ class CardSerializer(serializers.ModelSerializer):
 
 class FlashcardAISerializer(serializers.Serializer):
     url = serializers.URLField()
-    prompt = serializers.CharField(max_length=200)
+    prompt = serializers.CharField()
 
 class FlashcardAIFieldsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,4 +35,29 @@ class FlashcardAIFieldsSerializer(serializers.ModelSerializer):
             "id": {"read_only": True},
             "question": {"read_only": True},
             "answer": {"read_only": True},
+        }
+
+class FlashcardAIFieldsURLAndPromptSerializer(serializers.ModelSerializer):
+    url = serializers.URLField()
+    prompt = serializers.CharField()
+
+    class Meta:
+        model = Card
+        fields = [
+            "id",
+            "category_id",
+            "subcategory_id",
+            "deck_id",
+            "question",
+            "answer",
+            "url",
+            "prompt",
+        ]
+
+        extra_kwargs = {
+            "id": {"read_only": True},
+            "question": {"read_only": True},
+            "answer": {"read_only": True},
+            "url": {"write_only": True},
+            "prompt": {"write_only": True},
         }
