@@ -14,3 +14,10 @@ class DeckSerializer(serializers.ModelSerializer):
     def get_cards(self, obj):
         cards = Card.objects.filter(deck_id=obj.id)
         return CardSerializer(cards, many=True).data
+    
+
+class DeckSerializerById(serializers.ModelSerializer):
+    class Meta:
+        model = Deck
+        fields = ["id", "category_id", "subcategory_id", "name"]
+        extra_kwargs = {"id": {"read_only": True}}
