@@ -1,4 +1,4 @@
-import { useCategories, type CategoryType } from "../../hooks/useCategory";
+import { useCategories } from "../../hooks/useCategory";
 import { CardComponent } from "./_components/card-categories";
 
 export const CategoriesPage = () => {

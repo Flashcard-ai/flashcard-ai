@@ -4,6 +4,7 @@ import { ModalCreateCategoryComponent } from "./modal-create-category";
 import { useState } from "react";
 import type { CategoryType } from "../../../hooks/useCategory";
 import { ModalDeleteCategoryComponent } from "./modal-delete-category";
+import { useNavigate } from "react-router";
 
 interface CardInterface {
   newCategory: boolean;
@@ -20,14 +21,16 @@ export const CardComponent = ({
 }: CardInterface) => {
   const [showModal, setShowModal] = useState(false);
   const [showModalDelete, setShowModalDelete] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <div
       className={`flex flex-col flex-1 min-w-[300px] max-w-[400px] border-cyan-800 border-2 rounded-3xl ${
         newCategory
           ? "bg-cyan-300/20 pb-8 justify-center items-center"
-          : "justify-between p-8"
+          : "justify-between p-8 md:cursor-pointer"
       }`}
+      onClick={() => newCategory ? ' ' : navigate(`categories/${id}`)}
     >
       <ModalCreateCategoryComponent
         showModal={showModal}

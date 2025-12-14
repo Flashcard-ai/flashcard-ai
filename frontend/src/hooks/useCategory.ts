@@ -29,13 +29,13 @@ export const useDeleteCategory = (
       return getAPI().delete(`categories/${id}/`);
     },
     onMutate: () => {
-      addToast("Criando...", "info");
+      addToast("Deletando...", "info");
     },
     onSuccess: () => {
-      addToast("Criado com sucesso", "success");
+      addToast("Deletado com sucesso", "success");
     },
     onError: () => {
-      addToast("Não foi possivel criar.", "error");
+      addToast("Não foi possivel deletar.", "error");
     },
   });
 };
@@ -51,6 +51,15 @@ export const useCategories = () => {
     queryKey: ["get-all-categories"],
     queryFn: () => {
       return getAPI().get<CategoryType[]>("categories/");
+    },
+  });
+};
+
+export const useCategory = (id: number) => {
+  return useQuery({
+    queryKey: ["get-category"],
+    queryFn: () => {
+      return getAPI().get<CategoryType>(`categories/${id}`);
     },
   });
 };

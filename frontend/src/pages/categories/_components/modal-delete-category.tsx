@@ -1,7 +1,5 @@
 import { useToast } from "../../../hooks/useToast";
-import { useContext } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { AuthContext } from "../../../context/auth-context";
 import { useDeleteCategory } from "../../../hooks/useCategory";
 
 interface ModalDeleteCategoryProps {
@@ -16,7 +14,6 @@ export const ModalDeleteCategoryComponent = ({
   id,
 }: ModalDeleteCategoryProps) => {
   const { addToast } = useToast();
-  const authContext = useContext(AuthContext);
   const { mutate: mutateDeleteCategory } = useDeleteCategory(addToast);
   const queryClient = useQueryClient();
 
