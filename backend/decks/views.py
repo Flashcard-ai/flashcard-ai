@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from decks.models import Deck
-from decks.serializers import DeckSerializer
+from decks.serializers import DeckSerializer, DeckSerializerById
 from cards.models import Card
 from cards.serializers import CardSerializer
 from categories.models import Category
@@ -56,9 +56,12 @@ class DeckDetailView(APIView):
         if deck.category_id.owner != request.user:
             return Response({"error": "Forbidden"}, status=status.HTTP_403_FORBIDDEN)
 
+        deck_serializer = DeckSerializerById(deck)
+
         cards = Card.objects.filter(deck_id=deck)
         card_serializer = CardSerializer(cards, many=True)
         return Response({
+            "deck": deck_serializer.data,
             "cards": card_serializer.data
         })
     

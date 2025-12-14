@@ -143,7 +143,7 @@ class CardDetailView(APIView):
 
         serializer = CardSerializer(card)
         return Response(serializer.data)
-    
+
     def delete(self, request, id):
         card = get_object_or_404(Card, id=id)
 
