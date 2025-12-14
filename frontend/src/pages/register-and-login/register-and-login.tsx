@@ -69,7 +69,7 @@ export const RegisterAndLoginPage = () => {
       mutateLogin(apiData as any, {
         onSuccess: (response) => {
           authContext?.login(response.data?.access)
-          navigate('/categories', {replace: true})
+          navigate('/', {replace: true})
         },
       });
     }
