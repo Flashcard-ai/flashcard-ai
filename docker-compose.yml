@@ -1,0 +1,17 @@
+services:
+  frontend:
+    build: ./frontend
+    container_name: frontend_react
+    ports:
+      - "5173:5173"
+    restart: always
+
+  backend:
+    build: ./backend
+    container_name: backend_django
+    env_file:
+      - ./backend/.env
+    ports:
+      - "8000:8000"
+    restart: always
+

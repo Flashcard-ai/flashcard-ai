@@ -12,10 +12,10 @@ ENV PATH="/root/.local/bin/:$PATH"
 
 COPY pyproject.toml uv.lock ./ 
 
-RUN uv sync
+RUN uv sync --no-dev
 
 COPY . .
 
 EXPOSE 8000
 
-CMD [ "uv", "run", "python3", "manage.py", "runserver", "0.0.0.0:8000" ]
+CMD [ "uv", "run", "gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000" ]

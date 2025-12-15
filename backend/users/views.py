@@ -2,10 +2,10 @@ from rest_framework.views import APIView
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework import status
-from datetime import timedelta
+from django.conf import settings
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
+from rest_framework_simplejwt.exceptions import TokenError
 
 class LoginAPIView(APIView):
     permission_classes = [AllowAny]
@@ -32,9 +32,9 @@ class LoginAPIView(APIView):
             key="refresh",
             value=str(refresh),
             httponly=True,
-            secure=False,
+            secure=not settings.DEBUG,
             max_age=1296000, # 15 dias
-            samesite="Lax",
+            samesite="None" if not settings.DEBUG else "Lax",
             path="/"
         )
 
@@ -46,7 +46,6 @@ class RefreshTokenAPIView(APIView):
 
     def post(self, request):
         refresh_token = request.COOKIES.get("refresh")
-        print(f"Refresh: {refresh_token}")
 
         if not refresh_token:
             return Response({"detail": "Refresh token not provided"}, status=status.HTTP_401_UNAUTHORIZED)
@@ -64,9 +63,9 @@ class RefreshTokenAPIView(APIView):
                 key="refresh",
                 value=new_refresh,
                 httponly=True,
-                secure=False,
+                secure=not settings.DEBUG,
                 max_age=1296000, # 15 dias
-                samesite="Lax",
+                samesite="None" if not settings.DEBUG else "Lax",
                 path="/"
             )
 
