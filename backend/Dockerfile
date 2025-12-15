@@ -15,7 +15,6 @@ COPY pyproject.toml uv.lock ./
 RUN uv sync --no-dev
 
 COPY . .
-COPY .env .env
 
 RUN mkdir -p /core/staticfiles
 RUN python3 manage.py migrate
