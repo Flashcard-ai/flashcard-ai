@@ -16,6 +16,8 @@ RUN uv sync --no-dev
 
 COPY . .
 
+RUN python3 manage.py collectstatic --noinput
+
 EXPOSE 8000
 
 CMD [ "uv", "run", "gunicorn", "core.wsgi:application", "--bind", "0.0.0.0:8000" ]
