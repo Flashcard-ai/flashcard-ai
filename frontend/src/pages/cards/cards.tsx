@@ -15,7 +15,7 @@ import { useCreateCard, useCreateCardIA } from "../../hooks/useCard";
 import { useToast } from "../../hooks/useToast";
 import { useQueryClient } from "@tanstack/react-query";
 
-type Side = "front" | "back";
+export type Side = "front" | "back";
 
 type DeckType = {
   id: number;
@@ -133,7 +133,7 @@ export const CardsPage = () => {
       />
 
       <header className="flex items-center gap-4">
-        <ReturnButton to={`/categories/:id`} />
+        <ReturnButton to={`/categories/${dataDeck?.data.deck.id}`} />
 
         <div className="flex flex-col gap-1">
           <h1 className="text-2xl sm:text-3xl md:text-5xl font-bold font-exo2 bg-gradient-blue bg-clip-text text-transparent">
@@ -227,7 +227,16 @@ export const CardsPage = () => {
               Cards ({dataDeck?.data.cards.length})
             </h4>
 
-            <button className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 text-white font-inter text-xs sm:text-sm font-medium backdrop-blur-sm hover:bg-white/10 active:scale-95 transition">
+            <button
+              onClick={() => {
+                if (dataDeck?.data.cards.length !== 0) {
+                  navigate(`/categories/deck-view/${deckId}`, {
+                    replace: true,
+                  });
+                }
+              }}
+              className="flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-3 rounded-xl bg-white/5 border border-white/10 text-white font-inter text-xs sm:text-sm font-medium backdrop-blur-sm hover:bg-white/10 active:scale-95 transition"
+            >
               <img src={eyeIcon} height={16} width={16} alt="" />
               Visualizar
             </button>
