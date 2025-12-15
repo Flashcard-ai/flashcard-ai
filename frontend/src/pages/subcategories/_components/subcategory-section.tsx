@@ -7,6 +7,7 @@ import rightIcon from "../../../assets/right-card-icon.png";
 import leftIcon from "../../../assets/left-card-icon.png";
 import { ModalDeleteSubCategoryComponent } from "./modal-delete-subcategory";
 import { ModalDeleteDeckComponent } from "./modal-delete-deck";
+import { useNavigate } from "react-router";
 
 interface SubCategorySectionProps {
   name: string;
@@ -19,6 +20,7 @@ export const SubCategorySection = ({
   decks,
   id,
 }: SubCategorySectionProps) => {
+  const navigate = useNavigate();
   const scrollRef = useRef<HTMLDivElement>(null);
   const [showDeleteSubCategory, setShowDeleteSubCategory] = useState(false);
 
@@ -87,7 +89,8 @@ export const SubCategorySection = ({
             decks.map((deck) => (
               <div
                 key={deck.id}
-                className="flex items-center gap-2 justify-between w-[250px] md:w-[300px] p-4 md:p-6 px-6 md:px-10 border border-cyan-secondary rounded-2xl flex-shrink-0 transition-transform hover:scale-[1.01]"
+                onClick={() => navigate(`/categories/deck/${deck.id}`, { replace: true})}
+                className="md:cursor-pointer hover:scale-105 transition-transform ease-in duration-100 flex items-center gap-2 justify-between w-[250px] md:w-[300px] p-4 md:p-6 px-6 md:px-10 border border-cyan-secondary rounded-2xl"
               >
                 <div className="flex gap-3 md:gap-4 items-center">
                   <img
