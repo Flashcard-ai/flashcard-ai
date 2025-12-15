@@ -52,10 +52,6 @@ export const RegisterAndLoginPage = () => {
   const authContext = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    authContext?.login("")
-  }, [])
-
   function onSubmit(body: FormType) {
     const { confirmPassword, ...apiData } = body;
 
