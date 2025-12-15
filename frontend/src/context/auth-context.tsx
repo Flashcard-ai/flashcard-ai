@@ -19,6 +19,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const storedToken = localStorage.getItem("u_token");
     if (storedToken) {
       setToken(storedToken);
+      setAccessTokenMemory(storedToken);
     }
     setIsLoading(false);
   }, []);
@@ -26,11 +27,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const login = (newToken: string) => {
     setToken(newToken);
     localStorage.setItem("u_token", newToken);
+    setAccessTokenMemory(newToken);
   };
 
   const logout = () => {
     setToken("");
     localStorage.removeItem("u_token");
+    setAccessTokenMemory(null);
   };
 
   useEffect(() => {
