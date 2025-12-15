@@ -3,6 +3,7 @@ import { CategoriesPage } from "../pages/categories/categories";
 import { RegisterAndLoginPage } from "../pages/register-and-login/register-and-login";
 import { PrivateRouter } from "./private-router";
 import { SubCategoriesPage } from "../pages/subcategories/subcategories";
+import { CardsPage } from "../pages/cards/cards";
 
 const applicationRoutes = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const applicationRoutes = createBrowserRouter([
       {
         path: "/categories/:id",
         Component: SubCategoriesPage,
+      },
+      {
+        path: "/categories/deck/:id",
+        Component: CardsPage,
       },
     ],
   },

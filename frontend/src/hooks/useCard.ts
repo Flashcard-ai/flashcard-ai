@@ -1,15 +1,13 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
-import getAPI from "../api/api";
+import { useMutation } from "@tanstack/react-query";
 import type { ToastTypes } from "../context/toast-context";
-import type { DeckResponse } from "../pages/cards/cards";
+import getAPI from "../api/api";
 
-export const useCreateDeck = (
+export const useCreateCard = (
   addToast: (msg: string, type: ToastTypes) => void
 ) => {
   return useMutation({
     mutationFn: (body: any) => {
-      console.log(body);
-      return getAPI().post("decks/", body);
+      return getAPI().post("cards/", body);
     },
     onMutate: () => {
       addToast("Criando...", "info");
@@ -23,21 +21,31 @@ export const useCreateDeck = (
   });
 };
 
-export const useDeck = (id: number) => {
-  return useQuery({
-    queryKey: ["get-decks"],
-    queryFn: () => {
-      return getAPI().get<DeckResponse>(`decks/${id}/`);
+export const useCreateCardIA = (
+  addToast: (msg: string, type: ToastTypes) => void
+) => {
+  return useMutation({
+    mutationFn: (body: any) => {
+      return getAPI().post("cards/ai/", body);
+    },
+    onMutate: () => {
+      addToast("Criando...", "info");
+    },
+    onSuccess: () => {
+      addToast("Criado com sucesso", "success");
+    },
+    onError: () => {
+      addToast("Não foi possivel criar.", "error");
     },
   });
 };
 
-export const useDeleteDeck = (
+export const useDeleteCard = (
   addToast: (msg: string, type: ToastTypes) => void
 ) => {
   return useMutation({
     mutationFn: (id: number) => {
-      return getAPI().delete(`decks/${id}/`);
+      return getAPI().delete(`cards/${id}/`);
     },
     onMutate: () => {
       addToast("Deletando...", "info");
