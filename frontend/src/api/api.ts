@@ -4,7 +4,7 @@ import {
   setAccessTokenMemory,
 } from "../utils/auth-memory";
 
-const backURL = "http://localhost:8000/";
+const backURL = import.meta.env.VITE_API_BASE_URL;
 
 const api = axios.create({
   baseURL: backURL,
