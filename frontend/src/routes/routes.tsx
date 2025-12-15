@@ -4,6 +4,7 @@ import { RegisterAndLoginPage } from "../pages/register-and-login/register-and-l
 import { PrivateRouter } from "./private-router";
 import { SubCategoriesPage } from "../pages/subcategories/subcategories";
 import { CardsPage } from "../pages/cards/cards";
+import { CardsViewPage } from "../pages/cards-view/cards-view";
 
 const applicationRoutes = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const applicationRoutes = createBrowserRouter([
       {
         path: "/categories/deck/:id",
         Component: CardsPage,
+      },
+      {
+        path: "/categories/deck-view/:id",
+        Component: CardsViewPage,
       },
     ],
   },
