@@ -17,8 +17,8 @@ RUN uv sync --no-dev
 COPY . .
 
 RUN mkdir -p /core/staticfiles
-RUN python3 manage.py migrate
-RUN python3 manage.py collectstatic --noinput
+RUN uv run python3 manage.py migrate
+RUN uv run python3 manage.py collectstatic --noinput
 
 EXPOSE 8000
 
