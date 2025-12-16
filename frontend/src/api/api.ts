@@ -4,7 +4,11 @@ import {
   setAccessTokenMemory,
 } from "../utils/auth-memory";
 
-const backURL = import.meta.env.VITE_API_BASE_URL;
+//const backURL = import.meta.env.VITE_API_BASE_URL;
+const apiBaseURL = backURL.endsWith('/') ? `${backURL}api/` : `${backURL}/api/`;
+console.log('backURL:', backURL);
+console.log('apiBaseURL:', apiBaseURL);
+
 
 const api = axios.create({
   baseURL: backURL,
