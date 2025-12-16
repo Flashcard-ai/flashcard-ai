@@ -162,16 +162,16 @@ SIMPLE_JWT = {
 #CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://flashcard-ai-frontend.onrender.com"
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    "https://flashcard-ai.roan-vercel.app/"
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
 CSRF_TRUSTED_ORIGINS = [
     'https://flashcard-ai-sb71.onrender.com',
-    'https://flashcard-ai-frontend.onrender.com'
+    'https://flashcard-ai.roan-vercel.app/'
 ]
 
 CORS_ALLOWED_HEADERS = [
