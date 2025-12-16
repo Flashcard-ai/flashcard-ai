@@ -6,8 +6,12 @@ import {
 
 const backURL = import.meta.env.VITE_API_BASE_URL;
 
+const apiBaseURL = backURL.endsWith('/') 
+  ? `${backURL}api/`           // Se já tem /, adiciona api/
+  : `${backURL}/api/`;  
+
 const api = axios.create({
-  baseURL: backURL,
+  baseURL: apiBaseURL,
   withCredentials: true,
 });
 
