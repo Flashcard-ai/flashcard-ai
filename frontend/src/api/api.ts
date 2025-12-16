@@ -48,7 +48,7 @@ api.interceptors.response.use(
     try {
       console.log("[DEBUG] Tentando refresh token...");
 
-      const refresh = await axios.post(backURL + 'api/token/refresh/', {}, { withCredentials: true })
+      const refresh = await axios.post(backURL + '/api/token/refresh/', {}, { withCredentials: true })
       console.log("[DEBUG] Resposta do refresh:", refresh.data);
 
       const newToken = refresh.data.access;
